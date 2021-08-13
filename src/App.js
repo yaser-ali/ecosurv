@@ -1,11 +1,24 @@
 import './App.css';
 import axios from 'axios';
 import React from 'react';
+import Select from 'react-select';
 
 import ReactDom from 'react-dom';
 
 
 import Breedlist from './component/BreedList';
+
+const options = [
+    { value: '1', label: '1' },
+    { value: '2', label: '2' },
+    { value: '3', label: '3' },
+];
+
+const options2 = [
+    { value: '1', label: '1' },
+    { value: '2', label: '2' },
+    { value: '3', label: '3' },
+];
 
 
 class App extends React.Component {
@@ -19,6 +32,16 @@ class App extends React.Component {
             selectNum: []
         }
     }
+
+
+    state = {
+        selectedOption: null,
+      };
+      handleChange = (selectedOption) => {
+        this.setState({ selectedOption }, () =>
+          console.log(`Option selected:`, this.state.selectedOption)
+        );
+      };
 
     getDogImage = () => {
         const { select } = this.state;
@@ -74,58 +97,65 @@ class App extends React.Component {
         })
     }
 
-    handleNum = (x) => {
-        this.setState({
-            selectNum: x.target.value
-        })
-    }
+
+    // subBreed() {
+
+    // }
 
 
     componentDidMount() {
         this.getBreed();
-        const {selectNum} = this.state;
-        let url = ("https://dog.ceo/api/breeds/image/random/3");
+        let url = "https://dog.ceo/api/breeds/image/random/";
         fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
-            this.setState({dogs: data.message})
-        })
+            .then((res) => res.json())
+            .then((data) => {
+                this.setState({ dogs: data.message })
+            })
     }
 
     render() {
-        const { breed, imgURL, select, selectNum } = this.state;
+        const { breed, imgURL, select, selectedOption } = this.state;
 
         return (
             <div>
-          
-                <h1>Dogs by Breed</h1>
 
-                <p>Choose a dog from the drop down menu and click submit.</p>
+                <h1>dog.ceo</h1>
+
                 <div class="con">
-                <select value={select} onChange={this.handleSelect}>
-                    {breed.map(e =>
-                        <option value={e}> {e} </option>
-                    )}
-                </select>
-                <p>Number of Images:</p>
-                    <select value={selectNum} onChange={this.handleNum}>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                    <select value={select} onChange={this.handleSelect}>
+                        {breed.map(e =>
+                            <option value={e}> {e} </option>
+                        )}
                     </select>
+                    
+                    {/*Where sub-breed comes in*/}
+                    <p>Sub-Breed</p>
+                    <Select value={selectedOption}
+                    onChange={this.handleChange}
+                    options={options2   }/>
+                    {/*End */}
+
+                    <p>Number of Images:</p>
+                    <Select
+                        value={selectedOption}
+                        onChange={this.handleChange}
+                        options={options}
+                    />
                     <button id="submit" disabled={!select} onClick={this.getDogImage}>View Images</button>
                     <p></p>
 
                 </div>
                 
-                <p>Breed: {select}</p>
+
+                {/* Shows which type of breed */}
+                {/* <p>Breed: {select}</p> */}
 
                 <p></p>
 
                 <div className="container">
                     <img style={{ width: 300, height: 300 }} alt="dog" src={imgURL} />
                 </div>
-                <Breedlist dogs={this.state.dogs}/>
+                <Breedlist dogs={this.state.dogs} />
 
             </div>
         )
