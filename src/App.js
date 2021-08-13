@@ -105,7 +105,7 @@ class App extends React.Component {
 
     componentDidMount() {
         this.getBreed();
-        let url = "https://dog.ceo/api/breeds/image/random/";
+        let url = "https://dog.ceo/api/breeds/image/random/3";
         fetch(url)
             .then((res) => res.json())
             .then((data) => {
@@ -119,9 +119,10 @@ class App extends React.Component {
         return (
             <div>
 
-                <h1>dog.ceo</h1>
+                <h1 style={{textAlign: "center"}}>Welcome to eco surv exercise for dog.ceo</h1>
 
                 <div class="con">
+                    <p>Breed:</p>
                     <select value={select} onChange={this.handleSelect}>
                         {breed.map(e =>
                             <option value={e}> {e} </option>
@@ -129,7 +130,7 @@ class App extends React.Component {
                     </select>
                     
                     {/*Where sub-breed comes in*/}
-                    <p>Sub-Breed</p>
+                    <p>Sub-Breed:</p>
                     <Select value={selectedOption}
                     onChange={this.handleChange}
                     options={options2   }/>
