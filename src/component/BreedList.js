@@ -3,7 +3,7 @@ import Dogs from './breed';
 import './BreedList.css';
 
 const BreedList = (props) => {
-    const BreedArray = props.dogs.map((dogUrl) =>{
+    const BreedArray = props.dogs.map((dogUrl) => {
         return <Dogs url={dogUrl}/>
     })
 

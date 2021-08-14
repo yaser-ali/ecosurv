@@ -17,26 +17,13 @@ class App extends React.Component {
             breed: [""],
             select: "",
             dogs: [],
-            selectVal: []
+            selectVal: [],
+            sub: [""],
+            selectSub: ""
         };
     }
 
 
-    getDogImage = () => {
-        const { select } = this.state;
-        let url = "https://dog.ceo/api/breed/" + select + "/images/random";
-        axios
-            .get(url)
-            .then(response => {
-                this.setState({
-                    imgURL: response.data.message
-                });
-                console.log(response.data.message)
-            })
-            .catch(err => {
-                console.log("error fetching image");
-            });
-    };
 
     getBreed = () => {
         const { breed } = this.state;
@@ -52,12 +39,12 @@ class App extends React.Component {
             });
     }
     getSubBreed = () => {
-        const { Sub } = this.state;
+        const { sub } = this.state;
         axios
-            .get("https://dog.ceo/api/breeds/hound/list")
+            .get("https://dog.ceo/api/breed/hound/list")
             .then(response => {
                 this.setState({
-                    Sub: Sub.concat(response.data.message)
+                    sub: sub.concat(response.data.message)
                 })
             })
             .catch(err => {
@@ -66,12 +53,15 @@ class App extends React.Component {
     }
 
     getNumOfImg = () => {
-        const { selectVal } = this.state;
-        let url = ("https://dog.ceo/api/breeds/image/random/" + selectVal);
-        fetch(url)
-            .then((res) => res.json())
-            .then((data) => {
-                this.setState({ dogs: data.message })
+        const { selectVal, select } = this.state;
+        let url1 = ("https://dog.ceo/api/breed/" + select + "/images/random/" + selectVal);
+        axios
+        .get(url1)
+            .then(response => {
+                this.setState({
+                    dogs: response.data.message
+                });
+                console.log(response.data.message)
             })
             .catch(err => {
                 console.log("error fetching image");
@@ -79,14 +69,21 @@ class App extends React.Component {
     };
 
     componentDidMount() {
+        //Declaring the functions by calling them.
         this.getBreed();
-        // this.getSubBreed();
+        this.getSubBreed();
         this.getNumOfImg();
     }
 
     handleSelect = (e) => {
         this.setState({
             select: e.target.value
+        })
+    }
+
+    handleSubSelect = (x) => {
+        this.setState({
+            selectSub: x.target.value
         })
     }
 
@@ -97,7 +94,7 @@ class App extends React.Component {
     }
 
     render() {
-        const { breed, imgURL, select, selectVal } = this.state;
+        const { breed, imgURL, select, selectVal, sub, selectSub } = this.state;
 
         return (
             <div>
@@ -115,10 +112,14 @@ class App extends React.Component {
                         </select>
                     </label>
 
-                    <label>
-                        <p>Sub-Breed:</p>
-                        <select>
 
+                    {/* Sub breed does not work */}
+                    <label>
+                        <p>Sub-Breed</p>
+                        <select value={selectSub} onChange={this.handleSubSelect}>
+                            {sub.map(x =>
+                                <option value={x}> {x} </option>
+                            )}
                         </select>
                     </label>
 
@@ -137,22 +138,23 @@ class App extends React.Component {
                             <option value="10">10</option>
                         </select>
                     </label>
+
                     <p>{this.state.selectVal}</p>
 
-                    <button id="submit" disabled={!select} onClick={event => { this.getNumOfImg(event); this.getDogImage() }}>View Images</button>
+                    <button disabled={!select} onClick={this.getNumOfImg}>View Images</button>
 
                 </div>
-
-
-                {/* Shows which type of breed */}
-                {/* <p>Breed: {select}</p> */}
 
                 <p></p>
 
                 <div className="container">
-                    <img style={{ width: 300, height: 300 }} alt="dog image" src={imgURL} />
-                </div>
                 <Breedlist dogs={this.state.dogs} />
+                </div>
+                {/* Shows which type of breed */}
+                <p>Breed: {select}</p>
+
+                <p></p>
+
 
             </div>
         )
