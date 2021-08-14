@@ -9,7 +9,6 @@ import './App.css';
 import Breedlist from './component/BreedList';
 
 
-
 class App extends React.Component {
     constructor() {
         super();
@@ -103,42 +102,44 @@ class App extends React.Component {
         return (
             <div>
 
-                <h1 style={{ textAlign: "center" }}>Welcome to eco surv exercise for dog.ceo</h1>
+                <h1 style={{ textAlign: "center" }}>Welcome to dog.ceo</h1>
+                <h2 style={{ textAlign: "center" }}>Select a type of breed:</h2>
 
                 <div class="con">
-                    <p>Breed:</p>
-                    <select value={select} onChange={this.handleSelect}>
-                        {breed.map(e =>
-                            <option value={e}> {e} </option>
-                        )}
-                    </select>
-{/* 
-                    <p>Sub-Breed:</p>
-                    <select value={selectSub} onChange={this.handleSubSelect}>
-                        {Sub.map(x =>
-                            <option value={x}> {x} </option>
-                        )}
-                    </select> */}
+                    <label>
+                        <p>Breed</p>
+                        <select value={select} onChange={this.handleSelect}>
+                            {breed.map(e =>
+                                <option value={e}> {e} </option>
+                            )}
+                        </select>
+                    </label>
 
+                    <label>
+                        <p>Sub-Breed:</p>
+                        <select>
 
-                    <p>Number of Images:</p>
-                    <select value={selectVal} onChange={this.setSelectValue}>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
+                        </select>
+                    </label>
+
+                    <label>
+                        <p>Number of Images</p>
+                        <select value={selectVal} onChange={this.setSelectValue}>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </label>
                     <p>{this.state.selectVal}</p>
 
-                    <button id="submit" disabled={!select} onClick={this.getDogImage}>View Images</button>
-                    <button id="submit" disabled={!selectVal} onClick={this.getNumOfImg}>View Images</button>
-                    <p></p>
+                    <button id="submit" disabled={!select} onClick={event => { this.getNumOfImg(event); this.getDogImage() }}>View Images</button>
 
                 </div>
 
@@ -149,7 +150,7 @@ class App extends React.Component {
                 <p></p>
 
                 <div className="container">
-                    <img style={{ width: 300, height: 300 }} alt="dog" src={imgURL} />
+                    <img style={{ width: 300, height: 300 }} alt="dog image" src={imgURL} />
                 </div>
                 <Breedlist dogs={this.state.dogs} />
 
