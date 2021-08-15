@@ -117,6 +117,8 @@ class App extends React.Component {
 
                 <h1 style={{ textAlign: "center" }}>Welcome to dog.ceo</h1>
                 <h2 style={{ textAlign: "center" }}>Select a type of breed</h2>
+                <h2 style={{ textAlign: "center" }}>Also, select a number for how many defined images you want in return</h2>
+
 
                 <div class="con">
                     <label>
@@ -154,7 +156,7 @@ class App extends React.Component {
                             <option value="10">10</option>
                             <option value="11">11</option>
                             <option value="12">12</option>
-                            <option value="13">13</option>
+                            <option value="13">13</option>  
                             <option value="14">14</option>
                             <option value="15">15</option>
                             <option value="16">16</option>
