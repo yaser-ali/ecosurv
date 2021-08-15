@@ -67,12 +67,28 @@ class App extends React.Component {
                 console.log("error fetching image");
             });
     };
+    getSubBreedImg = () => {
+        const { selectSub } = this.state;
+        let url1 = ("https://dog.ceo/api/breed/" + selectSub + "/images/random/");
+        axios
+        .get(url1)
+            .then(response => {
+                this.setState({
+                    dogs: response.data.message
+                });
+                console.log(response.data.message)
+            })
+            .catch(err => {
+                console.log("error fetching image");
+            });
+    };
 
     componentDidMount() {
         //Declaring the functions by calling them.
         this.getBreed();
         this.getSubBreed();
         this.getNumOfImg();
+        this.getSubBreedImg();
     }
 
     handleSelect = (e) => {
@@ -94,13 +110,13 @@ class App extends React.Component {
     }
 
     render() {
-        const { breed, imgURL, select, selectVal, sub, selectSub } = this.state;
+        const { breed, select, selectVal, sub, selectSub } = this.state;
 
         return (
             <div>
 
                 <h1 style={{ textAlign: "center" }}>Welcome to dog.ceo</h1>
-                <h2 style={{ textAlign: "center" }}>Select a type of breed:</h2>
+                <h2 style={{ textAlign: "center" }}>Select a type of breed</h2>
 
                 <div class="con">
                     <label>
@@ -136,10 +152,20 @@ class App extends React.Component {
                             <option value="8">8</option>
                             <option value="9">9</option>
                             <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
                         </select>
                     </label>
 
-                    <p>{this.state.selectVal}</p>
+                    <p>Num: {this.state.selectVal}</p>
 
                     <button disabled={!select} onClick={this.getNumOfImg}>View Images</button>
 
@@ -147,9 +173,8 @@ class App extends React.Component {
 
                 <p></p>
 
-                <div className="container">
                 <Breedlist dogs={this.state.dogs} />
-                </div>
+
                 {/* Shows which type of breed */}
                 <p>Breed: {select}</p>
 
